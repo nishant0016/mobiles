@@ -41,9 +41,18 @@ app.get("/mobiles",function(req,res){
         if (err) res.status(404).send(err);
         else{
             let arr1=result.rows;
-            arr1=brand?arr1.filter(mb=>mb.brand===brand):arr1;
-            arr1=ram?arr1.filter(mb=>mb.ram===ram):arr1;
-            arr1=rom?arr1.filter(mb=>mb.rom===rom):arr1;
+            if (brand){
+                brand=brand.split(',');
+                arr1=arr1.filter(mb=>brand.find(mb1=>mb1===mb.brand));
+            }
+            if (ram){
+                ram=ram.split(',');
+                arr1=arr1.filter(mb=>ram.find(mb1=>mb1===mb.ram));
+            }
+            if (rom){
+                rom=rom.split(',');
+                arr1=arr1.filter(mb=>rom.find(mb1=>mb1===mb.rom));
+            }
             res.send(arr1);
         } 
     })
